@@ -28,7 +28,10 @@ const News = (props) => {
   };
 
   useEffect(() => {
-    updateNews();
+    Promise.all(updateNews()).catch((err) => {
+      // Promise.all(_getTiers()).catch((err) => {
+      console.log("error " + err)
+    });
     // effect
     return () => {
       // cleanup
