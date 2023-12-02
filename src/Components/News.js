@@ -67,12 +67,12 @@ const News = (props) => {
         <h1>Monkeynews -Top headline on {capitalizeFirstLetter(props.category)}</h1>
         {loading && <Spinner />}
       </div>
-      <InfiniteScroll
+      {/* <InfiniteScroll
         dataLength={articles?.length}
         next={fetchMoreData}
-        hasMore={articles.length !== totalResults}
+        hasMore={articles?.length !== totalResults}
         loader={<Spinner />}
-      >
+      > */}
         <div className="container">
           <div className="row">
             {articles.map((element) => (
@@ -89,7 +89,7 @@ const News = (props) => {
             ))}
           </div>
         </div>
-      </InfiniteScroll>
+      {/* </InfiniteScroll> */}
     </div>
   );
 };
