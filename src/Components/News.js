@@ -11,32 +11,46 @@ const News = (props) => {
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
-  const updateNews = async () => {
-    props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=5e93e41699c54e42bc4f0652a2b12820&page=${page}&pagesize=${props.pageSize}`;
-    setLoading(true);
-    let data = await fetch(url);
-    let parseData = await data.json();
-    setArticles(parseData.articles);
-    setTotalResults(parseData.totalResults);
-    setLoading(false);
-    props.setProgress(100);
-  };
+  // const updateNews = async () => {
+  //   props.setProgress(10);
+  //   const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=5e93e41699c54e42bc4f0652a2b12820&page=${page}&pagesize=${props.pageSize}`;
+  //   setLoading(true);
+  //   let data = await fetch(url);
+  //   let parseData = await data.json();
+  //   setArticles(parseData.articles);
+  //   setTotalResults(parseData.totalResults);
+  //   setLoading(false);
+  //   props.setProgress(100);
+  // };
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
-
   useEffect(() => {
-    Promise.all(updateNews()).catch((err) => {
-      // Promise.all(_getTiers()).catch((err) => {
-      console.log("error " + err)
-    });
-    // effect
-    return () => {
-      // cleanup
+    const updateNews = async () => {
+      props.setProgress(10);
+      const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=5e93e41699c54e42bc4f0652a2b12820&page=${page}&pagesize=${props.pageSize}`;
+      setLoading(true);
+      let data = await fetch(url);
+      let parseData = await data.json();
+      setArticles(parseData.articles);
+      setTotalResults(parseData.totalResults);
+      setLoading(false);
+      props.setProgress(100);
     };
+  
+    Promise.all([updateNews()]).catch((err) => {
+      console.log("error " + err);
+    });
+    // eslint-disable-next-line
   }, []);
+
+  // useEffect(() => {
+  //   Promise.all(updateNews()).catch((err) => {
+  //     // Promise.all(_getTiers()).catch((err) => {
+  //     console.log("error " + err)
+  //   });
+  // }, []);
 
   const fetchMoreData = async () => {
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=5e93e41699c54e42bc4f0652a2b12820&page=${page+1}&pagesize=${props.pageSize}`;
